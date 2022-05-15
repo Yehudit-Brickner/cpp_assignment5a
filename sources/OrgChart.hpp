@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include <unordered_map>
 #include <vector>
+#include <queue>
+#include <stack>
 using namespace std;
 
 namespace ariel{
@@ -12,8 +14,8 @@ namespace ariel{
 
     class OrgChart{
         public:
-            string _head;
-            unordered_map<string , std::vector<string>> _tree;
+            string* _head;
+            unordered_map<string* , std::vector<string*>> _tree;
             // data structer to hold the n tree
             // map of tree key the node val, value vector of node sons
             
@@ -23,20 +25,27 @@ namespace ariel{
             OrgChart add_sub(string s1,string s2);
             friend ostream& operator<<(ostream& output, const OrgChart& org);
             
-            // string* begin_level_order();
-            // string* end_level_order();
-            // string* begin_reverse_order();
-            // string* end_reverse_order();
-            // string* begin_preorder();
-            // string* end_preorder();
+            string* begin_level_order();
+            string* end_level_order();
+            string* begin_reverse_order();
+            string* reverse_order();
+            string* begin_preorder();
+            string* end_preorder();
 
-            
+            int* begin();
+            int* end();
             
             class level_order_iterator{
                 private:
+                    queue<string*> q;
                     string* pointer_to_current_node;
+
                     
                 public:
+                    level_order_iterator(){
+                       
+                    }
+
                     level_order_iterator(string* ptr = nullptr): pointer_to_current_node(ptr) {
 		            }  
 
@@ -48,12 +57,14 @@ namespace ariel{
                         return this;
                     }
 
-                    // level_order_iterator& operator++(){
+                    level_order_iterator& operator++();
+                    // {
                     //     pointer_to_current_node = pointer_to_current_node++;
 			        //     return *this;
                     // }
 
-                    // level_order_iterator& operator++(int){
+                    level_order_iterator& operator++(int);
+                    // {
                     //     level_order_iterator iterator=*this;
                     //     ++(*this);
                     //     return iterator; 
@@ -93,19 +104,21 @@ namespace ariel{
                         return this;
                     }
 
-                    // reverse_level_order_iterator& operator++(){
+                    reverse_level_order_iterator& operator++();
+                    // {
                     //     pointer_to_current_node = pointer_to_current_node++;
 			        //     return *this;
                     // }
 
-                    // reverse_level_order_iterator& operator++(int){
+                    reverse_level_order_iterator& operator++(int);
+                    // {
                     //     level_order_iterator iterator=*this;
                     //     ++(*this);
                     //     return iterator; 
                     // }
 
 
-                     bool operator==(const reverse_level_order_iterator& other) const{
+                    bool operator==(const reverse_level_order_iterator& other) const{
                         return pointer_to_current_node == other.pointer_to_current_node;
                     }
 
@@ -116,7 +129,7 @@ namespace ariel{
                     reverse_level_order_iterator begin_reverse_order(){
                         return pointer_to_current_node;
                     }
-                    reverse_level_order_iterator end_reverse_order(){
+                    reverse_level_order_iterator reverse_order(){
                         return nullptr;
                     }
             };
@@ -137,12 +150,14 @@ namespace ariel{
                         return this;
                     }
 
-                    // reverse_level_order_iterator& operator++(){
+                    reverse_level_order_iterator& operator++();
+                    // {
                     //     pointer_to_current_node = pointer_to_current_node++;
 			        //     return *this;
                     // }
 
-                    // reverse_level_order_iterator& operator++(int){
+                    reverse_level_order_iterator& operator++(int);
+                    // {
                     //     level_order_iterator iterator=*this;
                     //     ++(*this);
                     //     return iterator; 
