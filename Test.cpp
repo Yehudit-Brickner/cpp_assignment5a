@@ -62,6 +62,41 @@ TEST_CASE("test1"){
     string preorder1="numbers prime 2 odd_p 3 5 7 9 nonprime even_p 4 6 8 10 odd_np 1 9 ";
     CHECK(preorder1==preorder);
 
+    cout << num << endl;
+
+
+
+    CHECK_NOTHROW(num.add_root("positive_numbers"));
+    levelord="";
+    for (auto it = num.begin_level_order(); it != num.end_level_order(); ++it){
+        levelord.append(*it);
+        levelord.push_back(' ');
+    }
+    levelord1 = "positive_numbers prime nonprime even_p odd_p even_np odd_np 2 3 5 7 9 4 6 8 10 1 ";
+    CHECK(levelord1==levelord);
+
+    // string leverlprd2="";
+    // for (int element : num){ 
+    //     levelord.append(str(element));
+    //     levelord.push_back(' ');
+    // }
+    // CHECK(levelord1==levelord2);
+
+    reverselevelord="";
+    for (auto it = num.begin_reverse_order(); it != num.reverse_order(); ++it){
+        reverselevelord.append(*it);
+        reverselevelord.push_back(' ');
+    } 
+    reverselevelord1="2 3 5 7 9 4 6 8 10 1 even_p odd_p even_np odd_np rime nonprime positive_numbers ";
+    CHECK(reverselevelord1==reverselevelord);
+
+    preorder="";
+    for (auto it=num.begin_preorder(); it!=num.end_preorder(); ++it) {
+        preorder.append(*it);
+        preorder.push_back(' ');
+    } 
+    preorder1="positive_numbers prime 2 odd_p 3 5 7 9 nonprime even_p 4 6 8 10 odd_np 1 9 ";
+    CHECK(preorder1==preorder);
 
     cout << num << endl;
 }

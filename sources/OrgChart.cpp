@@ -11,13 +11,19 @@ using namespace ariel;
 int x =0;
 
 OrgChart::OrgChart(){
-
+this->_head=nullptr;
 }
 
 OrgChart OrgChart::add_root(string s){
-    // this->_head=&s;
-    // vector<string*> v;
-    // this->_tree.insert(pair<string*,vector<string*>>(&s,v));
+    // if(this->_head==nullptr){
+    //     this->_head=&s;
+    //     vector<string*> v;
+    //     this->_tree.insert(pair<string*,vector<string*>>(&s,v));
+    //     return *this;
+    // }
+    // else{
+    //    // find the row in the map change the key, or copy the vector, delete the row add in new row with new key old vector update _head
+    // }
     return *this;
 }
 
