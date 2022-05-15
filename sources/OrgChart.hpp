@@ -12,8 +12,8 @@ namespace ariel{
 
     class OrgChart{
         public:
-            string * _head;
-            unordered_map<string , std::vector<string *>> _tree;
+            string _head;
+            unordered_map<string , std::vector<string>> _tree;
             // data structer to hold the n tree
             // map of tree key the node val, value vector of node sons
             
@@ -22,13 +22,151 @@ namespace ariel{
             OrgChart add_root(string s);
             OrgChart add_sub(string s1,string s2);
             friend ostream& operator<<(ostream& output, const OrgChart& org);
-            void begin_level_order();
-            void end_level_order();
-            void begin_reverse_order();
-            void reverse_order();
-            void begin_preorder();
-            void end_preorder();
+            
+            // string* begin_level_order();
+            // string* end_level_order();
+            // string* begin_reverse_order();
+            // string* end_reverse_order();
+            // string* begin_preorder();
+            // string* end_preorder();
+
+            
+            
+            class level_order_iterator{
+                private:
+                    string* pointer_to_current_node;
+                    
+                public:
+                    level_order_iterator(string* ptr = nullptr): pointer_to_current_node(ptr) {
+		            }  
+
+                    level_order_iterator& operator*(){
+                       return *this; 
+                    } 
+
+                    level_order_iterator* operator->(){
+                        return this;
+                    }
+
+                    // level_order_iterator& operator++(){
+                    //     pointer_to_current_node = pointer_to_current_node++;
+			        //     return *this;
+                    // }
+
+                    // level_order_iterator& operator++(int){
+                    //     level_order_iterator iterator=*this;
+                    //     ++(*this);
+                    //     return iterator; 
+                    // }
+
+
+                     bool operator==(const level_order_iterator& other) const{
+                        return pointer_to_current_node == other.pointer_to_current_node;
+                    }
+
+                    bool operator!=(const level_order_iterator& other) const{
+                        return !(*this==other);
+                    }
+                 
+                    level_order_iterator begin_level_order(){
+                        return pointer_to_current_node;
+                    }
+                    level_order_iterator end_level_order(){
+                        return nullptr;
+                    }
+            };
+
+
+    class reverse_level_order_iterator{
+                private:
+                    string* pointer_to_current_node;
+                    
+                public:
+                    reverse_level_order_iterator(string* ptr = nullptr): pointer_to_current_node(ptr) {
+		            }  
+
+                    reverse_level_order_iterator& operator*(){
+                       return *this; 
+                    } 
+
+                    reverse_level_order_iterator* operator->(){
+                        return this;
+                    }
+
+                    // reverse_level_order_iterator& operator++(){
+                    //     pointer_to_current_node = pointer_to_current_node++;
+			        //     return *this;
+                    // }
+
+                    // reverse_level_order_iterator& operator++(int){
+                    //     level_order_iterator iterator=*this;
+                    //     ++(*this);
+                    //     return iterator; 
+                    // }
+
+
+                     bool operator==(const reverse_level_order_iterator& other) const{
+                        return pointer_to_current_node == other.pointer_to_current_node;
+                    }
+
+                    bool operator!=(const reverse_level_order_iterator& other) const{
+                        return !(*this==other);
+                    }
+                 
+                    reverse_level_order_iterator begin_reverse_order(){
+                        return pointer_to_current_node;
+                    }
+                    reverse_level_order_iterator end_reverse_order(){
+                        return nullptr;
+                    }
+            };
+
+            class preorder_iterator{
+                private:
+                    string* pointer_to_current_node;
+                    
+                public:
+                    preorder_iterator(string* ptr = nullptr): pointer_to_current_node(ptr) {
+		            }  
+
+                    preorder_iterator& operator*(){
+                       return *this; 
+                    } 
+
+                    preorder_iterator* operator->(){
+                        return this;
+                    }
+
+                    // reverse_level_order_iterator& operator++(){
+                    //     pointer_to_current_node = pointer_to_current_node++;
+			        //     return *this;
+                    // }
+
+                    // reverse_level_order_iterator& operator++(int){
+                    //     level_order_iterator iterator=*this;
+                    //     ++(*this);
+                    //     return iterator; 
+                    // }
+
+
+                     bool operator==(const preorder_iterator& other) const{
+                        return pointer_to_current_node == other.pointer_to_current_node;
+                    }
+
+                    bool operator!=(const preorder_iterator& other) const{
+                        return !(*this==other);
+                    }
+                 
+                    preorder_iterator begin_preorder(){
+                        return pointer_to_current_node;
+                    }
+                    preorder_iterator end_preorder(){
+                        return nullptr;
+                    }
+            };
     };
+            
+}
 
     // template<typename Vector>
     // class VectorIterator{
@@ -87,4 +225,3 @@ namespace ariel{
     //         PointerType m_ptr;
     // };
 
-}
