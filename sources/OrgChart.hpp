@@ -21,8 +21,6 @@ namespace ariel{
                 Node* parent;
 
                 Node(string &d) : data(d), parent(nullptr){}
-
-
             };
 
             Node* _root;
@@ -58,7 +56,6 @@ namespace ariel{
                 
             }
 
-           
 
             // print the tree in a nice way
             friend ostream& operator<<(ostream& output, const OrgChart& org){
@@ -96,8 +93,8 @@ namespace ariel{
                     }
  
 
-                    level_order_iterator& operator*(){
-                       return *this; 
+                    string operator*(){
+                       return this->q.front()->data; 
                     } 
 
                     level_order_iterator* operator->(){
@@ -136,7 +133,6 @@ namespace ariel{
                 public:
                     reverse_level_order_iterator(Node* n){
                         
-
                     } 
 
                     reverse_level_order_iterator& operator*(){
@@ -195,8 +191,8 @@ namespace ariel{
                         } 
                     }
                     
-                    preorder_iterator& operator*(){
-                       return *this; 
+                    string operator*(){
+                       return this->q.front()->data; 
                     } 
 
                     preorder_iterator* operator->(){
@@ -251,8 +247,14 @@ namespace ariel{
 
 
 
-            // int* begin();
-            // int* end();
+            level_order_iterator begin();
+            level_order_iterator end();
+
+            // reverse_level_order_iterator begin();
+            // reverse_level_order_iterator end();
+
+            // level_order_iterator begin();
+            // level_order_iterator end();
 
     };
             
