@@ -21,6 +21,8 @@ namespace ariel{
                 Node* parent;
 
                 Node(string &d) : data(d), parent(nullptr){}
+
+                Node (string &d, Node * n) : data(d), parent(n){}
             };
 
             Node* _root;
@@ -44,16 +46,30 @@ namespace ariel{
             // we will find the parent node and add the kid to its vector
             OrgChart add_sub(string s1,string s2){
                 if (this->_root==nullptr){
-                    // throw an error
+                    throw std::invalid_argument( "the orgchart is empty" ); 
                 }
-                for (auto it = *this.begin_level_order(); it != *this.end_level_order(); ++it){
-                    if (it->data==s1){
-                        it->kids.add(new Node(s2));
+                queue<Node*> q;
+                queue<Node*>helper;
+                helper.push(this->_root);
+                while(helper.size()!=0){
+                    if (helper.front()->data==s1){
+                        helper.front()->kids.push_back(new Node (s2, helper.front()));
                         return *this;
                     }
+                    Node* dad=helper.front();
+                    q.push(dad);
+                    helper.pop();
+                    getchildren(dad, &helper); 
                 }
-                // throw error parent no in orgchart
-                
+                // throw error parent no in orgchart 
+                throw std::invalid_argument( "parent is not in the orgchart" );   
+            }
+
+            // gets the kid of a node from right to left
+            void getchildren(Node* n, queue<Node*>* que){
+                for (unsigned long i =0; i< n->kids.size();i++){
+                    que->push(n->kids[i]);
+                } 
             }
 
 
@@ -67,7 +83,7 @@ namespace ariel{
             }
             
            
-            
+            // this iterartor transverses the OrgChart by levels from top to bottom, each level in transversed from left to right
             class level_order_iterator{
                 private:
                     queue<Node*> q;
@@ -92,7 +108,6 @@ namespace ariel{
                         } 
                     }
  
-
                     string operator*(){
                        return this->q.front()->data; 
                     } 
@@ -124,37 +139,50 @@ namespace ariel{
                  
             };
 
-
+            //this iterator transverses the OrgChart by levels bottom to top, each level in transversed from left to right
             class reverse_level_order_iterator{
                 private:
                     Node* pointer_to_current_node;
-                    queue<Node*> q;
+                    stack<Node*> st;
                     
                 public:
                     reverse_level_order_iterator(Node* n){
-                        
+                        queue<Node*>helper;
+                        helper.push(n);
+                        while(helper.size()!=0){
+                            Node* dad=helper.front();
+                            this->st.push(dad);
+                            helper.pop();
+                            getkids(dad, &helper); 
+                        }
+                       pointer_to_current_node = n;
+                    }
+
+                    void getkids(Node* n, queue<Node*>* que){
+                        for (unsigned long i =n->kids.size()-1; i>=0;i--){
+                            que->push(n->kids[i]);
+                        } 
                     } 
 
-                    reverse_level_order_iterator& operator*(){
-                       return *this; 
+                    string operator*(){
+                       return this->st.top()->data;
                     } 
 
                     reverse_level_order_iterator* operator->(){
                         return this;
                     }
 
-                    reverse_level_order_iterator& operator++();
-                    // {
-                    //     pointer_to_current_node = pointer_to_current_node++;
-			        //     return *this;
-                    // }
+                    reverse_level_order_iterator& operator++(){
+                        this->st.pop();
+                        pointer_to_current_node=st.top();
+			            return *this;
+                    }
 
-                    reverse_level_order_iterator& operator++(int);
-                    // {
-                    //     level_order_iterator iterator=*this;
-                    //     ++(*this);
-                    //     return iterator; 
-                    // }
+                    reverse_level_order_iterator& operator++(int){
+                        reverse_level_order_iterator iterator=*this;
+                        ++(*this);
+                        return iterator; 
+                    }
 
 
                     bool operator==(const reverse_level_order_iterator& other) const{
@@ -166,7 +194,8 @@ namespace ariel{
                     }
                  
             };
-
+            
+            // this iterator transverses the OrGChart in preorder. that means that for each node it will visit the node first then its kids in order from left to right
             class preorder_iterator{
                 private:
                     queue<Node*> q;
@@ -245,16 +274,13 @@ namespace ariel{
                 return preorder_iterator(n);
             }
 
-
-
-            level_order_iterator begin();
-            level_order_iterator end();
-
-            // reverse_level_order_iterator begin();
-            // reverse_level_order_iterator end();
-
-            // level_order_iterator begin();
-            // level_order_iterator end();
+            level_order_iterator begin(){
+                return begin_level_order();
+            }
+            level_order_iterator end(){
+                return end_level_order();
+            }
+        
 
     };
             

@@ -49,8 +49,8 @@ int main() {
   } // prints: CEO CTO CFO COO VP_SW VP_BI
 
   // demonstrate the arrow operator:
-  for (auto it = organization.begin_level_order(); it != organization.end_level_order(); ++it)
-  {
-    cout << it->size() << " " ;
-  } // prints: 3 3 3 3 5 5
+  // for (auto it = organization.begin_level_order(); it != organization.end_level_order(); ++it)
+  // {
+  //   cout << it->size() << " " ;
+  // } // prints: 3 3 3 3 5 5
 }
