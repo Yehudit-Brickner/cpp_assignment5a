@@ -57,10 +57,9 @@ namespace ariel{
                         helper.front()->kids.push_back(new Node (s2, helper.front()));
                         return *this;
                     }
-                    Node* dad=helper.front();
-                    q.push(dad);
+                    q.push(helper.front());
+                    getchildren(helper.front(), &helper); 
                     helper.pop();
-                    getchildren(dad, &helper); 
                 }
                 // throw error parent no in orgchart 
                 throw std::invalid_argument( "parent is not in the orgchart" );   
@@ -84,218 +83,42 @@ namespace ariel{
             }
             
 
-            // this iterartor transverses the OrgChart by levels from top to bottom, each level in transversed from left to right
-            
-                
-                
+            class Iterator{
+                private:
+                Node* pointer_to_current_node;
+                public:
+                Iterator(Node * n){
+                    pointer_to_current_node=n;   
+                }
+                string operator*(){
+                    return pointer_to_current_node->data; 
+                } 
 
-            // this iterartor transverses the OrgChart by levels from top to bottom, each level in transversed from left to right
-            // class level_order_iterator{
-            //     private:
-            //         queue<Node*> q;
-            //         Node* pointer_to_current_node;
-                    
-            //     public:
-            //         level_order_iterator(Node* n){
-            //             if(n){
-            //                 queue<Node*>helper;
-            //                 helper.push(n);
-            //                 while(!helper.empty()){
-            //                     // Node* dad=helper.front();
-            //                     this->q.push(helper.front());
-            //                     getkids(helper.front(), &helper); 
-            //                     helper.pop();
-            //                 }
-            //                 pointer_to_current_node = n;
-            //                 cout<< this->q.front()->kids[0]->data<<endl;
-            //             }
-            //         }
+                string* operator->(){
+                    return &(pointer_to_current_node->data);
+                }
 
-            //         void getkids(Node* n, queue<Node*>* que){
-            //             for (unsigned long i =0; i< n->kids.size();i++){
-            //                 que->push(n->kids[i]);
-            //             } 
-            //         }
- 
-            //         string operator*(){
-            //            return this->q.front()->data; 
-            //         } 
+                Iterator& operator++(){
+                    pointer_to_current_node=pointer_to_current_node->next;
+                    return *this;
+                }
 
-            //         level_order_iterator* operator->(){
-            //             return this;
-            //         }
-
-            //         level_order_iterator& operator++(){
-            //             this->q.pop();
-            //             pointer_to_current_node=q.front();
-            //             return *this;
-            //         }
-
-            //         // level_order_iterator& operator++(int){
-            //         //     level_order_iterator iterator= *this;
-            //         //     ++(*this);
-            //         //     return iterator; 
-            //         // }
+                Iterator operator++(int){
+                    Iterator iterator= *this;
+                    ++(*this);
+                    return iterator; 
+                }
 
 
-            //         bool operator==(const level_order_iterator& other) const{
-            //             return pointer_to_current_node == other.pointer_to_current_node;
-            //         }
+                bool operator==(const Iterator& other) const{
+                    return pointer_to_current_node == other.pointer_to_current_node;
+                }
 
-            //         bool operator!=(const level_order_iterator& other) const{
-            //             return !(*this==other);
-            //         }
-                 
-            // };
+                bool operator!=(const Iterator& other) const{
+                    return !(*this==other);
+                }
 
-            // //this iterator transverses the OrgChart by levels bottom to top, each level in transversed from left to right
-            // class reverse_level_order_iterator{
-            //     private:
-            //         Node* pointer_to_current_node;
-            //         stack<Node*> st;
-                    
-            //     public:
-            //         reverse_level_order_iterator(Node* n){
-            //             queue<Node*>helper;
-            //             helper.push(n);
-            //             while(helper.size()!=0){
-            //                 Node* dad=helper.front();
-            //                 this->st.push(dad);
-            //                 helper.pop();
-            //                 getkids(dad, &helper); 
-            //             }
-            //            pointer_to_current_node = n;
-            //         }
-
-            //         void getkids(Node* n, queue<Node*>* que){
-            //             for (unsigned long i =n->kids.size()-1; i>=0;i--){
-            //                 que->push(n->kids[i]);
-            //             } 
-            //         } 
-
-            //         string operator*(){
-            //            return this->st.top()->data;
-            //         } 
-
-            //         reverse_level_order_iterator* operator->(){
-            //             return this;
-            //         }
-
-            //         reverse_level_order_iterator& operator++(){
-            //             this->st.pop();
-            //             pointer_to_current_node=st.top();
-			//             return *this;
-            //         }
-
-            //         // reverse_level_order_iterator& operator++(int){
-            //         //     reverse_level_order_iterator iterator=*this;
-            //         //     ++(*this);
-            //         //     return iterator; 
-            //         // }
-
-
-            //         bool operator==(const reverse_level_order_iterator& other) const{
-            //             return pointer_to_current_node == other.pointer_to_current_node;
-            //         }
-
-            //         bool operator!=(const reverse_level_order_iterator& other) const{
-            //             return !(*this==other);
-            //         }
-                 
-            // };
-            
-            // // this iterator transverses the OrGChart in preorder. that means that for each node it will visit the node first then its kids in order from left to right
-            // class preorder_iterator{
-            //     private:
-            //         queue<Node*> q;
-            //         Node* pointer_to_current_node;
-                    
-            //     public:
-                   
-            //         preorder_iterator(Node* n){
-            //             stack<Node*> helper;
-            //             helper.push(n);
-            //             while(helper.size()!=0){
-            //                 Node* dad=helper.top();
-            //                 this->q.push(dad);
-            //                 getkids(dad, &helper);
-            //             }
-            //             pointer_to_current_node = n;
-            //         }
-
-            //         void getkids(Node* n, stack<Node*>* st){
-            //             for (unsigned long i =n->kids.size()-1; i>=0;i--){
-            //                 st->push(n->kids[i]);
-            //             } 
-            //         }
-                    
-            //         string operator*(){
-            //            return this->q.front()->data; 
-            //         } 
-
-            //         preorder_iterator* operator->(){
-            //             return this;
-            //         }
-
-            //         preorder_iterator& operator++(){
-            //             this->q.pop();
-            //             pointer_to_current_node=this->q.front();
-			//             return *this;
-            //         }
-
-            //         // preorder_iterator& operator++(int){
-            //         //     preorder_iterator iterator=*this;
-            //         //     ++(*this);
-            //         //     return iterator; 
-            //         // }
-
-
-            //          bool operator==(const preorder_iterator& other) const{
-            //             return pointer_to_current_node == other.pointer_to_current_node;
-            //         }
-
-            //         bool operator!=(const preorder_iterator& other) const{
-            //             return !(*this==other);
-            //         }
-            // };
-            // this iterartor transverses the OrgChart by levels from top to bottom, each level in transversed from left to right            
-
-                class Iterator{
-                    private:
-                    Node* pointer_to_current_node;
-                    public:
-                    Iterator(Node * n){
-                        pointer_to_current_node=n;   
-                    }
-                    string operator*(){
-                       return pointer_to_current_node->data; 
-                    } 
-
-                    string* operator->(){
-                        return &(pointer_to_current_node->data);
-                    }
-
-                    Iterator& operator++(){
-                        pointer_to_current_node=pointer_to_current_node->next;
-                        return *this;
-                    }
-
-                    // Iterator& operator++(int){
-                    //     Iterator iterator= *this;
-                    //     ++(*this);
-                    //     return iterator; 
-                    // }
-
-
-                    bool operator==(const Iterator& other) const{
-                        return pointer_to_current_node == other.pointer_to_current_node;
-                    }
-
-                    bool operator!=(const Iterator& other) const{
-                        return !(*this==other);
-                    }
-
-                } ;
+            } ;
 
             void set_next__level_order(){
                 queue<Node*>q;
