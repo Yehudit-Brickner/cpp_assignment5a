@@ -91,15 +91,21 @@ namespace ariel{
                     
                 public:
                     level_order_iterator(Node* n){
-                        queue<Node*>helper;
-                        helper.push(n);
-                        while(helper.size()!=0){
-                            Node* dad=helper.front();
-                            this->q.push(dad);
-                            helper.pop();
-                            getkids(dad, &helper); 
-                        }
-                       pointer_to_current_node = n;
+                            queue<Node*>helper;
+                            helper.push(n);
+                            while(!helper.empty()){
+                                // Node* dad=helper.front();
+                                this->q.push(helper.front());
+                                getkids(helper.front(), &helper); 
+                                helper.pop();
+                            }
+                            pointer_to_current_node = n;
+                            cout<< this->q.front()->kids[0]->data<<endl;
+                    }
+
+                    level_order_iterator(){
+                        Node* n =nullptr;
+                        pointer_to_current_node= n;
                     }
 
                     void getkids(Node* n, queue<Node*>* que){
@@ -119,14 +125,14 @@ namespace ariel{
                     level_order_iterator& operator++(){
                         this->q.pop();
                         pointer_to_current_node=q.front();
-			            return *this;
+                        return *this;
                     }
 
-                    level_order_iterator& operator++(int){
-                        level_order_iterator iterator=*this;
-                        ++(*this);
-                        return iterator; 
-                    }
+                    // level_order_iterator& operator++(int){
+                    //     level_order_iterator iterator= *this;
+                    //     ++(*this);
+                    //     return iterator; 
+                    // }
 
 
                     bool operator==(const level_order_iterator& other) const{
@@ -178,11 +184,11 @@ namespace ariel{
 			            return *this;
                     }
 
-                    reverse_level_order_iterator& operator++(int){
-                        reverse_level_order_iterator iterator=*this;
-                        ++(*this);
-                        return iterator; 
-                    }
+                    // reverse_level_order_iterator& operator++(int){
+                    //     reverse_level_order_iterator iterator=*this;
+                    //     ++(*this);
+                    //     return iterator; 
+                    // }
 
 
                     bool operator==(const reverse_level_order_iterator& other) const{
@@ -234,11 +240,11 @@ namespace ariel{
 			            return *this;
                     }
 
-                    preorder_iterator& operator++(int){
-                        preorder_iterator iterator=*this;
-                        ++(*this);
-                        return iterator; 
-                    }
+                    // preorder_iterator& operator++(int){
+                    //     preorder_iterator iterator=*this;
+                    //     ++(*this);
+                    //     return iterator; 
+                    // }
 
 
                      bool operator==(const preorder_iterator& other) const{
@@ -251,11 +257,12 @@ namespace ariel{
             };
 
             level_order_iterator begin_level_order(){
-               return level_order_iterator(this->_root);
+                   return level_order_iterator(this->_root);
+                
             }
             level_order_iterator end_level_order(){
-                Node* n =nullptr;
-                return level_order_iterator(n);
+                // Node* n =nullptr;
+                return level_order_iterator();
             }
 
             reverse_level_order_iterator begin_reverse_order(){ 
